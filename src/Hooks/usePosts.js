@@ -22,22 +22,7 @@ export const usePosts = () => {
         return response.json();
       })
       .then(({data}) => {
-        const allPosts = [];
-
-        data.children.forEach(post => {
-          const dataPost = post.data;
-
-          allPosts.push({
-            id: dataPost.id,
-            thumbnail: dataPost.thumbnail,
-            title: dataPost.title,
-            author: dataPost.author,
-            ups: dataPost.ups,
-            date: dataPost.created,
-          });
-        });
-
-        setPosts(allPosts);
+        setPosts(data.children);
       })
       .catch((err) => {
         if (err.message === '401') {

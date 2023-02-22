@@ -7,7 +7,7 @@ import Date from './Date';
 import Thumbnail from './Thumbnail';
 
 export const Post = ({postData}) => {
-  const {thumbnail, title, author, ups, date} = postData;
+  const {thumbnail, title, author, ups, created: date} = postData;
 
   return (
     <li className={style.post}>

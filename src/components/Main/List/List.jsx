@@ -9,8 +9,8 @@ export const List = () => {
   return (
     <ul className={style.list}>
       {
-        posts.map(postData => (
-          <Post key={postData.id} postData={postData} />
+        posts.map(({data}) => (
+          <Post key={data.id} postData={data} />
         ))
       }
     </ul>
