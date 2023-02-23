@@ -8,12 +8,12 @@ import Thumbnail from './Thumbnail';
 
 export const Post = ({postData}) => {
   const {
+    id,
     thumbnail,
     title,
     author,
     ups,
     created,
-    selftext: markdown,
   } = postData;
 
   return (
@@ -22,7 +22,7 @@ export const Post = ({postData}) => {
         <DeleteBtn />
       </button>
       <Thumbnail title={title} source={thumbnail} />
-      <Content title={title} author={author} markdown={markdown} />
+      <Content title={title} author={author} id={id} />
       <Rating ups={ups} />
       <Date date={created} />
     </li>

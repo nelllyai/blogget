@@ -14,16 +14,30 @@ export const useCommentsData = id => {
         Authorization: `bearer ${token}`,
       },
     })
-      .then(response => {
+      .then((response) => {
         if (response.status === 401) {
           throw new Error(response.status);
         }
-
         return response.json();
       })
-      .then(({data}) => {
-        setCommentsData(data.children);
-      })
+      .then(
+        ([
+          {
+            data: {
+              children: [{data: post}],
+            },
+          },
+          {
+            data: {
+              children,
+            },
+          },
+        ]) => {
+          const comments = children.map(item => item.data);
+          comments.pop();
+          setCommentsData([post, comments]);
+        },
+      )
       .catch((err) => {
         if (err.message === '401') {
           delToken();
