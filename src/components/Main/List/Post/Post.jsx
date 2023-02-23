@@ -7,7 +7,14 @@ import Date from './Date';
 import Thumbnail from './Thumbnail';
 
 export const Post = ({postData}) => {
-  const {thumbnail, title, author, ups, created: date} = postData;
+  const {
+    thumbnail,
+    title,
+    author,
+    ups,
+    created,
+    selftext: markdown,
+  } = postData;
 
   return (
     <li className={style.post}>
@@ -15,9 +22,9 @@ export const Post = ({postData}) => {
         <DeleteBtn />
       </button>
       <Thumbnail title={title} source={thumbnail} />
-      <Content title={title} author={author} />
+      <Content title={title} author={author} markdown={markdown} />
       <Rating ups={ups} />
-      <Date date={date} />
+      <Date date={created} />
     </li>
   );
 };
