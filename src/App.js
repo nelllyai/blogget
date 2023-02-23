@@ -1,19 +1,20 @@
-import {AuthContextProvider} from './context/authContext';
-import {TokenContextProvider} from './context/tokenContext';
 import Header from './components/Header';
 import Main from './components/Main';
+import {Provider} from 'react-redux';
+import {AuthContextProvider} from './context/authContext';
 import {PostsContextProvider} from './context/postsContext';
+import {store} from './store';
 
 function App() {
   return (
-    <TokenContextProvider value={{}}>
-      <AuthContextProvider value={{}}>
-        <Header />
-        <PostsContextProvider value={{}}>
+    <Provider store={store}>
+      <AuthContextProvider>
+        <PostsContextProvider>
+          <Header />
           <Main />
         </PostsContextProvider>
       </AuthContextProvider>
-    </TokenContextProvider>
+    </Provider>
   );
 }
 
