@@ -4,3 +4,8 @@
   justify-content: space-around;
   gap: 30px;
 }
+
+.end {
+  flex-basis: 100%;
+  visibility: hidden;
+}
