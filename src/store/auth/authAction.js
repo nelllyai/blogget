@@ -34,7 +34,7 @@ export const authRequestAsync = () => (dispatch, getState) => {
 
   axios(`${URL_API}/api/v1/me`, {
     headers: {
-      Authorization: `bearer ${token}sad`,
+      Authorization: `bearer ${token}`,
     },
   })
     .then(({data: {name, icon_img: iconImg}}) => {
