@@ -7,10 +7,11 @@ import {useDispatch} from 'react-redux';
 import {deleteToken} from '../../../store/tokenReducer';
 import {useAuth} from '../../../Hooks/useAuth';
 import Preloader from '../../../UI/Preloader';
+import Notification from '../../Notification';
 
 export const Auth = () => {
   const [showButton, setShowButton] = useState(false);
-  const [auth, loading, clearAuth] = useAuth();
+  const [auth, loading, error, clearAuth] = useAuth();
   const dispatch = useDispatch();
 
   return (
@@ -46,9 +47,13 @@ export const Auth = () => {
           }
         </>
       ) : (
-        <Text className={style.authLink} As='a' href={urlAuth}>
-          <LoginIcon className={style.svg} />
-        </Text>
+        <>
+          <Text className={style.authLink} As='a' href={urlAuth}>
+            <LoginIcon className={style.svg} />
+          </Text>
+
+          {error && <Notification />}
+        </>
       )}
     </div>);
 };
