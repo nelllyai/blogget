@@ -6,7 +6,7 @@ import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {deleteToken} from '../../../store/tokenReducer';
 import {useAuth} from '../../../Hooks/useAuth';
-import AuthLoader from './AuthLoader';
+import Preloader from '../../../UI/Preloader';
 
 export const Auth = () => {
   const [showButton, setShowButton] = useState(false);
@@ -16,7 +16,7 @@ export const Auth = () => {
   return (
     <div className={style.container}>
       {loading ? (
-        <AuthLoader />
+        <Preloader />
       ) : auth.name ? (
         <>
           <button

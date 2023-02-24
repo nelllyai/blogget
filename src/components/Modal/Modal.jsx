@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
 import {useEffect, useRef, useState} from 'react';
-import {useCommentsData} from '../../Hooks/useCommentsData';
+import {useComments} from '../../Hooks/useComments';
 import Comments from './Comments';
 import FormComment from './FormComment';
 import {Text} from '../../UI/Text';
 
 export const Modal = ({id, closeModal}) => {
-  const [commentsData] = useCommentsData(id);
-  const [post, comments] = commentsData;
+  const [postData, status] = useComments(id);
+  const [post, comments] = postData;
   const [isFormOpen, setIsFormOpen] = useState(false);
   const overlayRef = useRef(null);
 
@@ -42,8 +42,9 @@ export const Modal = ({id, closeModal}) => {
   return ReactDOM.createPortal(
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
-        {
-        post ?
+        {status === 'loading' && 'Загрузка...'}
+        {status === 'error' && 'Произошла ошибка!'}
+        {status === 'loaded' && (
           <>
             <Text As='h2' className={style.title}>
               {post.title}
@@ -81,9 +82,8 @@ export const Modal = ({id, closeModal}) => {
             <button className={style.close} onClick={closeModal}>
               <CloseIcon />
             </button>
-          </> :
-          <p>Загрузка...</p>
-        }
+          </>
+        )}
       </div>
     </div>,
     document.getElementById('modal-root'),
