@@ -11,23 +11,28 @@ import {ReactComponent as HomeIcon} from './img/home.svg';
 import {ReactComponent as TopIcon} from './img/top.svg';
 import {ReactComponent as BestIcon} from './img/best.svg';
 import {ReactComponent as HotIcon} from './img/hot.svg';
+import {useNavigate} from 'react-router-dom';
 
 const LIST = [
   {
     value: 'Главная',
     Icon: HomeIcon,
+    link: 'rising',
   },
   {
     value: 'Топ',
     Icon: TopIcon,
+    link: 'top',
   },
   {
     value: 'Лучшие',
     Icon: BestIcon,
+    link: 'best',
   },
   {
     value: 'Горячие',
     Icon: HotIcon,
+    link: 'hot',
   },
 ].map(assignId);
 
@@ -35,6 +40,8 @@ export const Tabs = () => {
   const [dropDownTitle, setDropDownTitle] = useState('Меню');
   const [isDropDownOpen, setIsDrowDownOpen] = useState(false);
   const [isDropDown, setIsDropDown] = useState(true);
+
+  const navigate = useNavigate();
 
   const handleResize = () => {
     if (document.documentElement.clientWidth < 768) {
@@ -75,14 +82,17 @@ export const Tabs = () => {
 
       {(isDropDownOpen || !isDropDown) &&
         <ul className={style.list} onClick={() => setIsDrowDownOpen(false)}>
-          {LIST.map(({value, id, Icon}) => (
+          {LIST.map(({value, link, id, Icon}) => (
             <li
               className={style.item}
               key={id}
             >
               <button
                 className={style.btn}
-                onClick={() => setDropDownTitle(value)}
+                onClick={() => {
+                  setDropDownTitle(value);
+                  navigate(`/category/${link}`);
+                }}
               >
                 <Text
                   size={14}

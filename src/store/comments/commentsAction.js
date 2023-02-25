@@ -45,7 +45,6 @@ export const commentsRequestAsync = id => (dispatch, getState) => {
         },
       ]}) => {
         const comments = children.map(item => item.data);
-        comments.pop();
         dispatch(commentsRequestSuccess([post, comments]));
       },
     )
