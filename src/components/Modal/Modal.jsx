@@ -13,8 +13,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 export const Modal = () => {
   const {id, page} = useParams();
   const navigate = useNavigate();
-  const [postData, status] = useComments(id);
-  const [post, comments] = postData;
+  const [post, comments, status] = useComments(id);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const overlayRef = useRef(null);
 
