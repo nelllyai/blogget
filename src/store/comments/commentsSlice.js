@@ -2,7 +2,8 @@ import {createSlice} from '@reduxjs/toolkit';
 import {commentsRequestAsync} from './commentsAction';
 
 const initialState = {
-  data: [],
+  post: {},
+  comments: [],
   status: '',
   error: {},
 };
