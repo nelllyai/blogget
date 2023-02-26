@@ -7,7 +7,6 @@ import {postsRequestAsync} from '../../../store/posts/postsAction';
 import {Outlet, useParams} from 'react-router-dom';
 
 export const List = () => {
-  const [counter, setCounter] = useState(0);
   const posts = useSelector(state => state.posts.data);
   const loading = useSelector(state => state.posts.loading);
 
@@ -16,13 +15,19 @@ export const List = () => {
 
   const {page} = useParams();
 
+  const [count, setCount] = useState(0);
+
   useEffect(() => {
+    setCount(0);
     dispatch(postsRequestAsync(page));
   }, [page]);
 
   useEffect(() => {
+    if (!endList.current) return;
+
     const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
+        setCount(count => count + 1);
         dispatch(postsRequestAsync());
       }
     }, {
@@ -30,11 +35,6 @@ export const List = () => {
     });
 
     observer.observe(endList.current);
-    setCounter(prev => prev + 1);
-
-    if (counter >= 2) {
-      observer.unobserve(endList.current);
-    }
 
     return () => {
       if (endList.current) {
@@ -47,16 +47,25 @@ export const List = () => {
     <>
       <ul className={style.list}>
         {
-          loading && !counter ? (
-            <Preloader size={150} />
-          ) : (
-            posts.map(({data}) => (
-              <Post key={data.id} postData={data} />
-            ))
-          )
+          posts.map(({data}) => (
+            <Post key={data.id} postData={data} />
+          ))
         }
-        <li className={style.end} ref={endList} />
+        {count < 3 && <li className={style.end} ref={endList} />}
       </ul>
+
+      <div className={style.container}>
+        {
+        loading ?
+            <Preloader size={150} /> :
+            posts.length ? <button
+              onClick={() => dispatch(postsRequestAsync())}
+              className={style.btn}
+            >
+              Загрузить еще
+            </button> : <></>
+        }
+      </div>
       <Outlet />
     </>
   );
