@@ -13,7 +13,11 @@ const initialState = {
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {},
+  reducers: {
+    changePage: (state, action) => {
+      state.page = action.payload.page;
+    }
+  },
   extraReducers: {
     [postsRequestAsync.pending.type]: state => {
       state.loading = true;
@@ -23,7 +27,7 @@ export const postsSlice = createSlice({
       state.loading = false;
       state.data = action.payload.data;
       state.after = action.payload.after;
-      state.isLast = !action.payload.after;
+      state.isLast = action.payload.isLast || !!action.payload.after;
       state.page = action.payload.page;
       state.error = {};
     },

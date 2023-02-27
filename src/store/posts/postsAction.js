@@ -7,22 +7,17 @@ export const postsRequestAsync = createAsyncThunk(
   'posts/fetch',
   (newPage, {getState}) => {
     const prevPosts = getState().posts.data;
-    const after = getState().posts.after;
-
-    const isLast = getState().posts.isLast;
-    console.log(isLast);
-
+    let after = getState().posts.after;
     let page = getState().posts.page;
 
     if (newPage) {
       page = newPage;
-      return {data: prevPosts, after, page};
+      after = '';
     }
 
     const token = getState().tokenReducer.token;
 
-    if (!token || isLast) {
-      console.log(token, isLast);
+    if (!token) {
       return {data: prevPosts, after, page};
     }
 
@@ -34,11 +29,10 @@ export const postsRequestAsync = createAsyncThunk(
         },
       })
       .then(({data}) => {
-        console.log(data);
         const postsData = data.data;
         const nextPosts = postsData.children;
 
-        if (postsData.after) {
+        if (after) {
           return {
             data: [...prevPosts, ...nextPosts],
             after: postsData.after,
@@ -46,7 +40,7 @@ export const postsRequestAsync = createAsyncThunk(
           };
         }
 
-        return {data: nextPosts, after, page};
+        return {data: nextPosts, after: postsData.after, page};
       })
       .catch(error => Promise.reject(error));
   },
