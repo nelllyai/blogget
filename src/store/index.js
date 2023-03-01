@@ -2,7 +2,7 @@ import {tokenMiddleware, tokenReducer} from './tokenReducer';
 import {commentReducer} from './commentReducer';
 import {authReducer} from './auth/authReducer';
 import {configureStore} from '@reduxjs/toolkit';
-import postsReducer from './posts/postsSlice';
+import {postsReducer} from './posts/postsReducer';
 import commentsReducer from './comments/commentsSlice';
 import {searchReducer} from './search/searchReducer';
 import createSagaMiddleware from '@redux-saga/core';

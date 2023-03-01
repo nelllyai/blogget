@@ -1,6 +1,8 @@
-import {watchSearch} from './search/searchSaga';
+import {watchPosts} from './posts/postsSaga';
+// import {watchSearch} from './search/searchSaga';
 
 
 export default function* rootSaga() {
-  yield watchSearch();
+  // yield watchSearch();
+  yield watchPosts();
 }

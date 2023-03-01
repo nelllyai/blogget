@@ -1,47 +1,31 @@
-/* eslint-disable arrow-body-style */
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
-import {URL_API} from '../../api/const';
+export const POSTS_REQUEST = 'POSTS_REQUEST';
+export const POSTS_REQUEST_SUCCESS = 'POSTS_REQUEST_SUCCESS';
+export const POSTS_REQUEST_SUCCESS_AFTER = 'POSTS_REQUEST_SUCCESS_AFTER';
+export const POSTS_REQUEST_ERROR = 'POSTS_REQUEST_ERROR';
+export const CHANGE_PAGE = 'CHANGE_PAGE';
 
-export const postsRequestAsync = createAsyncThunk(
-  'posts/fetch',
-  (newPage, {getState}) => {
-    const prevPosts = getState().posts.data;
-    let after = getState().posts.after;
-    let page = getState().posts.page;
+export const postsRequest = () => ({
+  type: POSTS_REQUEST,
+});
 
-    if (newPage) {
-      page = newPage;
-      after = '';
-    }
+export const postsRequestSuccess = data => ({
+  type: POSTS_REQUEST_SUCCESS,
+  data: data.children,
+  after: data.after,
+});
 
-    const token = getState().tokenReducer.token;
+export const postsRequestSuccessAfter = data => ({
+  type: POSTS_REQUEST_SUCCESS_AFTER,
+  data: data.children,
+  after: data.after,
+});
 
-    if (!token) {
-      return {data: prevPosts, after, page};
-    }
+export const postsRequestError = error => ({
+  type: POSTS_REQUEST_ERROR,
+  error,
+});
 
-    return axios(
-      `${URL_API}/${page}?limit=10&${after ? `after=${after}` : ''}`,
-      {
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      })
-      .then(({data}) => {
-        const postsData = data.data;
-        const nextPosts = postsData.children;
-
-        if (after) {
-          return {
-            data: [...prevPosts, ...nextPosts],
-            after: postsData.after,
-            page
-          };
-        }
-
-        return {data: nextPosts, after: postsData.after, page};
-      })
-      .catch(error => Promise.reject(error));
-  },
-);
+export const changePage = page => ({
+  type: CHANGE_PAGE,
+  page,
+});
