@@ -3,8 +3,8 @@ import Post from './Post';
 import Preloader from '../../../UI/Preloader';
 import {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {postsRequestAsync} from '../../../store/posts/postsAction';
 import {Outlet, useParams} from 'react-router-dom';
+import {postsRequest} from '../../../store/posts/postsSlice';
 
 export const List = () => {
   const posts = useSelector(state => state.posts.data);
@@ -19,7 +19,7 @@ export const List = () => {
 
   useEffect(() => {
     setCount(0);
-    dispatch(postsRequestAsync(page));
+    dispatch(postsRequest(page));
   }, [page]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export const List = () => {
     const observer = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
         setCount(count => count + 1);
-        dispatch(postsRequestAsync());
+        dispatch(postsRequest());
       }
     }, {
       rootMargin: '100px',
@@ -59,7 +59,7 @@ export const List = () => {
         loading ?
             <Preloader size={150} /> :
             posts.length ? <button
-              onClick={() => dispatch(postsRequestAsync())}
+              onClick={() => dispatch(postsRequest())}
               className={style.btn}
             >
               Загрузить еще
