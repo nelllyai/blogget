@@ -19,7 +19,7 @@ export const List = () => {
 
   useEffect(() => {
     setCount(0);
-    dispatch(postsRequest(page));
+    dispatch(postsRequest({page}));
   }, [page]);
 
   useEffect(() => {

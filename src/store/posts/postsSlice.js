@@ -7,6 +7,7 @@ const initialState = {
   after: '',
   isLast: false,
   page: '',
+  search: '',
 };
 
 export const postsSlice = createSlice({
@@ -24,6 +25,7 @@ export const postsSlice = createSlice({
       state.isLast = action.payload.isLast || !!action.payload.after;
       state.page = action.payload.page;
       state.error = {};
+      state.search = action.payload.search;
     },
     postsRequestError: (state, action) => {
       state.loading = false;
@@ -35,6 +37,7 @@ export const postsSlice = createSlice({
 export const {
   postsRequest,
   postsRequestSuccess,
-  postsRequestError
+  postsRequestError,
+  searchRequest
 } = postsSlice.actions;
 export default postsSlice.reducer;

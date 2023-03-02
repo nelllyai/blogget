@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {searchRequest} from '../../../store/search/searchAction';
+import {postsRequest} from '../../../store/posts/postsSlice';
 import style from './Search.module.css';
 
 export const Search = () => {
@@ -9,7 +9,7 @@ export const Search = () => {
   const dispatch = useDispatch();
   const handlerSubmit = e => {
     e.preventDefault();
-    dispatch(searchRequest(search));
+    dispatch(postsRequest({search}));
   };
 
   return (
