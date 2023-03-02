@@ -13,11 +13,7 @@ const initialState = {
 export const postsSlice = createSlice({
   name: 'posts',
   initialState,
-  reducers: {
-    changePage: (state, action) => {
-      state.page = action.payload.page;
-    }
-  },
+  reducers: {},
   extraReducers: {
     [postsRequestAsync.pending.type]: state => {
       state.loading = true;
