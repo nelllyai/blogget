@@ -38,6 +38,5 @@ export const {
   postsRequest,
   postsRequestSuccess,
   postsRequestError,
-  searchRequest
 } = postsSlice.actions;
 export default postsSlice.reducer;
