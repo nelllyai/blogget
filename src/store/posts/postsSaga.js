@@ -26,8 +26,6 @@ function* fetchPosts({
 
   if (!token) return;
 
-  console.log(`search?q=${search}?limit=10&${after ? `after=${after}` : ''}`);
-
   try {
     const request = yield call(
       axios,
